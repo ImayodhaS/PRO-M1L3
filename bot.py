@@ -35,4 +35,19 @@ async def ban_error(ctx, error):
     elif isinstance(error, commands.MemberNotFound):
         await ctx.send("User not found.")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+
+    # Jika pesan mengandung link
+    if "https://" in message.content:
+        await message.channel.send(
+            f"{message.author.mention} WOIII TAK BAN KAU SEKARANGGG"
+        )
+        try:
+            await message.guild.ban(message.author)
+        except:
+            await message.channel.send("ngga ada izin")
+
 bot.run(token)
